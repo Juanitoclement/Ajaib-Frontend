@@ -36,7 +36,7 @@ You may also see any lint errors in the console.
 ### `npm test`
 
 Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The coverage folder will appear in the root folder, select icov-report and open `index.html` file to preview the coverage on the browser!
 
 ### `npm run build`
 
