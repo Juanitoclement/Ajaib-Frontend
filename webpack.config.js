@@ -32,7 +32,10 @@ module.exports = {
             }
         ]
     },
-    plugins: [new HtmlWebpackPlugin({template: './public/index.html'})],
+    plugins: [new HtmlWebpackPlugin({
+        template: './public/index.html',
+        favicon: './public/ajaib-logo.ico'
+    })],
     resolve: {
         extensions: ['', '.js', '.jsx']
     }
