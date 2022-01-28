@@ -34,7 +34,7 @@ module.exports = {
     },
     plugins: [new HtmlWebpackPlugin({
         template: './public/index.html',
-        favicon: './public/ajaib-logo.ico'
+        favicon: './public/favicon.ico'
     })],
     resolve: {
         extensions: ['', '.js', '.jsx']
