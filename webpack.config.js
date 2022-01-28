@@ -5,7 +5,11 @@ module.exports = {
     // Where files should be sent once they are bundled
     output: {
         path: path.join(__dirname, '/dist'),
+        publicPath: '/',
         filename: 'bundle.js'
+    },
+    devServer: {
+        historyApiFallback: true
     },
     // Rules of how webpack will take our files, complie & bundle them for the browser
     module: {
@@ -19,9 +23,12 @@ module.exports = {
             },
             {
                 test: /\.(scss|css)$/,
-                use: ['style-loader', 'css-loader']
+                use: ['style-loader', 'css-loader', 'sass-loader']
             }
         ]
     },
-    plugins: [new HtmlWebpackPlugin({template: './public/index.html'})]
+    plugins: [new HtmlWebpackPlugin({template: './public/index.html'})],
+    resolve: {
+        extensions: ['', '.js', '.jsx']
+    }
 }
