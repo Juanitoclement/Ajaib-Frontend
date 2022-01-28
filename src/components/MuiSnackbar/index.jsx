@@ -13,7 +13,7 @@ const MuiSnackbar = ({ open, type, messageText, handleClose }) => {
     },[open])
 
     return (
-        <div>
+        <>
             <Snackbar
                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
                 open={open}
@@ -23,7 +23,7 @@ const MuiSnackbar = ({ open, type, messageText, handleClose }) => {
                     {messageText}
                 </Alert>
             </Snackbar>
-        </div>
+        </>
     )
 }
 

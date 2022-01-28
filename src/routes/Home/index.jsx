@@ -1,20 +1,17 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import debounce from "lodash.debounce";
-import {Pagination} from "@mui/material";
+import {Button, Pagination} from "@mui/material";
 
-import MuiTable from "../../components/MuiTable";
+import MuiTable from "./components/MuiTable";
+import MuiSelect from "./components/MuiSelect";
+
 import MuiSnackbar from "../../components/MuiSnackbar";
-import SearchBar from "../../components/SearchBar";
+import MuiSearchBar from "../../components/MuiSearchBar";
 
 import {getUser} from "../../services/user";
 import {normalizeUserData} from "../../utils/user-utils";
 
 import './styles.scss';
-
-const DEFAULT_RESULT_NUMBER = 10;
-
-// using the same seed to get same result from API
-const DEFAULT_SEED = 'clement'
 
 const Home = () => {
     const [data, setData] = useState([]);
@@ -22,20 +19,20 @@ const Home = () => {
     const [isFetching, setIsFetching] = useState(false);
     const [searchValue, setSearchValue] = useState('');
     const [fetchStatus, setFetchStatus] = useState('Success');
+    const [selectedGender, setSelectedGender] = useState('');
+    const [rowsPerPage, setRowsPerPage] = useState(10);
     const [page, setPage] = useState(1);
 
     useEffect(() => {
-        console.log('helo world')
-        getUserList('', 1)
+        getUserList(searchValue, page, selectedGender)
     },[])
 
-    const getUserList = (searchVal, currPage) => {
+    const getUserList = (searchVal, currPage, gender) => {
         setIsFetching(true);
         getUser({
             keyword: searchVal,
             page: currPage,
-            results: DEFAULT_RESULT_NUMBER,
-            seed: DEFAULT_SEED
+            gender: gender
         }).then(res => {
             if(res && res.length > 0) {
                 setShowSnackbar(true)
@@ -51,32 +48,51 @@ const Home = () => {
 
     const debounceFetch = useMemo(
         () =>
-        debounce((searchValue, currPage) => {
-            getUserList(searchValue, currPage);
+        debounce((searchVal, currPage, gender) => {
+            getUserList(searchVal, currPage, gender);
         }, 700), []
     );
 
+    const resetFilter = () => {
+        setSelectedGender('')
+        setSearchValue('')
+        setPage(1)
+        debounceFetch('', 1, '')
+    }
+
     return (
         <div className="home">
-            <h1>User Table</h1>
+            <h1 style={{ color: 'white' }}>Ajaib Frontend - User Table</h1>
             <div className="table-container">
+
                 <div className="filter-container">
-                    <SearchBar
-                        value={searchValue}
-                        onInputChange={({target}) => {
-                            console.log('helo wrold', target.value)
-                            setSearchValue(target.value)
-                            setPage(1)
-                            debounceFetch(searchValue, 1)
-                    }}/>
+                    <div className="search-bar-filter">
+                        <MuiSearchBar
+                            value={searchValue}
+                            onInputChange={value => {
+                                setSearchValue(value)
+                                setPage(1)
+                                debounceFetch(value, 1, selectedGender)
+                            }}/>
+                    </div>
+                    <div className="select-filter">
+                        <MuiSelect value={selectedGender} handleChange={({target}) => {
+                            setSelectedGender(target.value)
+                            getUserList(searchValue, page, target.value)
+                        }}/>
+                    </div>
+                    <div className="reset-filter">
+                        <Button variant="outlined" size="large" onClick={resetFilter}>Reset Filter</Button>
+                    </div>
                 </div>
+
                 <MuiTable userData={data} isFetching={isFetching}/>
             </div>
             <div className="table-pagination">
                 <Pagination
                     page={page}
                     onChange={(event, value) => {
-                        getUserList(searchValue, value)
+                        getUserList(searchValue, value, selectedGender)
                         setPage(value)
                     }}
                     count={100}

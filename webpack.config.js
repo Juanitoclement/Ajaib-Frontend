@@ -5,8 +5,13 @@ module.exports = {
     // Where files should be sent once they are bundled
     output: {
         path: path.join(__dirname, '/dist'),
-        publicPath: '/',
+        publicPath: '/dist/',
         filename: 'bundle.js'
+    },
+    performance: {
+        hints: false,
+        maxEntrypointSize: 512000,
+        maxAssetSize: 512000
     },
     devServer: {
         historyApiFallback: true

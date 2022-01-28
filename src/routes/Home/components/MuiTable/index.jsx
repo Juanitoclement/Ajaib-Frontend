@@ -35,7 +35,10 @@ const MuiTable = ({ userData }) => {
                     </TableHead>
                     <TableBody>
                         {userData.map((res, i) => (
-                            <TableRow key={i}>
+                            <TableRow
+                                key={`table-details-${i}`}
+                                style={{backgroundColor: i % 2 === 0 ? '#D3D3D3' : 'white'}}
+                            >
                                 <TableCell >{res.username}</TableCell>
                                 <TableCell >{res.name}</TableCell>
                                 <TableCell >{res.email}</TableCell>
