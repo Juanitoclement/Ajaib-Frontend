@@ -5,7 +5,7 @@ module.exports = {
     // Where files should be sent once they are bundled
     output: {
         path: path.join(__dirname, '/dist'),
-        publicPath: '/dist/',
+        publicPath: '/',
         filename: 'bundle.js'
     },
     devServer: {
