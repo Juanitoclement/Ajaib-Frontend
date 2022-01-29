@@ -25,6 +25,7 @@ Note: Use node version 14
 3. Using React.fragments -> avoid additional HTML elements wrappers
 4. Tree Shaking -> reduce size bundle e.g: lodash.get
 5. Code-splitting -> using dynamic import e.g : import {getUser} from "../../services/user";
+6. Webpack -> minify the code by default in production mode
 
 ## Available Scripts
 
