@@ -16,23 +16,32 @@ import './styles.scss';
 const Home = () => {
     const [data, setData] = useState([]);
     const [showSnackbar, setShowSnackbar] = useState(false);
-    const [isFetching, setIsFetching] = useState(false);
     const [searchValue, setSearchValue] = useState('');
     const [fetchStatus, setFetchStatus] = useState('Success');
     const [selectedGender, setSelectedGender] = useState('');
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [resetSort, setResetSort] = useState(false);
+    const [sortBy, setSortBy] = useState('');
+    const [sortOrder, setSortOrder] = useState('');
     const [page, setPage] = useState(1);
 
     useEffect(() => {
-        getUserList(searchValue, page, selectedGender)
+        getUserList(searchValue, page, selectedGender, sortBy, sortOrder)
     },[])
 
-    const getUserList = (searchVal, currPage, gender) => {
-        setIsFetching(true);
+    const debounceFetch = useMemo(
+        () =>
+            debounce((searchVal, currPage, gender, sortBy, sortOrder) => {
+                getUserList(searchVal, currPage, gender, sortBy, sortOrder);
+            }, 700), []
+    );
+
+    const getUserList = (searchVal, currPage, gender, sortBy, sortOrder) => {
         getUser({
             keyword: searchVal,
             page: currPage,
-            gender: gender
+            gender: gender,
+            sortBy: sortBy,
+            sortOrder: sortOrder
         }).then(res => {
             if(res && res.length > 0) {
                 setShowSnackbar(true)
@@ -41,23 +50,24 @@ const Home = () => {
             }
         }).catch(() => {
             setFetchStatus('Failed')
-        }).finally(() => {
-            setIsFetching(false)
         })
     }
-
-    const debounceFetch = useMemo(
-        () =>
-        debounce((searchVal, currPage, gender) => {
-            getUserList(searchVal, currPage, gender);
-        }, 700), []
-    );
 
     const resetFilter = () => {
         setSelectedGender('')
         setSearchValue('')
         setPage(1)
-        debounceFetch('', 1, '')
+        debounceFetch('', 1, '', '', '')
+        setResetSort(!resetSort)
+        setSortOrder('')
+        setSortBy('')
+    }
+
+    const handleSort = (sortBy, value) => {
+        const currentSortOrder = value === true ? 'ascend' : 'descend'
+        setSortBy(sortBy)
+        setSortOrder(currentSortOrder)
+        getUserList(searchValue, page, selectedGender, sortBy, currentSortOrder)
     }
 
     return (
@@ -72,13 +82,13 @@ const Home = () => {
                             onInputChange={value => {
                                 setSearchValue(value)
                                 setPage(1)
-                                debounceFetch(value, 1, selectedGender)
+                                debounceFetch(value, 1, selectedGender, sortBy, sortOrder)
                             }}/>
                     </div>
                     <div className="select-filter">
                         <MuiSelect value={selectedGender} handleChange={({target}) => {
                             setSelectedGender(target.value)
-                            getUserList(searchValue, page, target.value)
+                            getUserList(searchValue, page, target.value, sortBy, sortOrder)
                         }}/>
                     </div>
                     <div className="reset-filter">
@@ -86,13 +96,14 @@ const Home = () => {
                     </div>
                 </div>
 
-                <MuiTable userData={data} isFetching={isFetching}/>
+                {/* Render Table User*/}
+                <MuiTable userData={data} handleSort={handleSort} resetSort={resetSort}/>
             </div>
             <div className="table-pagination">
                 <Pagination
                     page={page}
                     onChange={(event, value) => {
-                        getUserList(searchValue, value, selectedGender)
+                        getUserList(searchValue, value, selectedGender, sortBy, sortOrder)
                         setPage(value)
                     }}
                     count={100}

@@ -13,6 +13,13 @@ export function getUser(params) {
         delete params.keyword
     }
 
+    if(params.sortBy === '') {
+        delete params.sortBy
+    }
+    if(params.sortOrder === '') {
+        delete params.sortOrder
+    }
+
     const result = axios.get(url, { params }).then(res => {
         if(res.status === 200){
             return res?.data?.results;

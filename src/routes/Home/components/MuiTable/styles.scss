@@ -3,6 +3,21 @@
     border: 1px solid grey;
   }
 
+  .col-field {
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    align-items: center;
+
+    .name {
+      margin-right: 8px;
+    }
+
+    .sort {
+      display: flex;
+    }
+  }
+
   .table-details {
 
     .white-stripe {

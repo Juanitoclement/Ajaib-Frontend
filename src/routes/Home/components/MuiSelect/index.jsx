@@ -1,5 +1,5 @@
 import React from 'react';
-import {FormControl, FormHelperText, InputLabel, MenuItem, Select} from "@mui/material";
+import {FormControl, MenuItem, Select} from "@mui/material";
 
 const MuiSelect = ({value , handleChange }) => {
     return (

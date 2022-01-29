@@ -14,11 +14,19 @@
 
       .search-bar-filter {
         margin-right: 12px;
+
+        .MuiPaper-root {
+          width: auto;
+        }
       }
 
       .select-filter {
         background-color: white;
         border-radius: 8px;
+
+        .MuiFormControl-root {
+          min-width: 100px;
+        }
       }
 
       .reset-filter {
