@@ -72,7 +72,7 @@ const Home = () => {
 
     return (
         <div className="home">
-            <h1 style={{ color: 'white' }}>Ajaib Frontend - User Table</h1>
+            <h1 style={{ color: 'white' }}>Ajaib Frontend - Random User Table</h1>
             <div className="table-container">
 
                 <div className="filter-container">

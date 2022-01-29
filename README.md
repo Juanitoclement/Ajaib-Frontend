@@ -1,4 +1,4 @@
-# Getting Started with Ajaib frontend user table
+# Getting Started with Ajaib frontend - Random User Table
 
 Github repository for the [Ajaib Frontend](https://github.com/Juanitoclement/Ajaib-Frontend).
 
