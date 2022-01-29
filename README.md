@@ -23,7 +23,8 @@ Note: Use node version 14
 1. Debouncing methods
 2. UseMemo -> Memoization
 3. Using React.fragments -> avoid additional HTML elements wrappers
-4. Tree Shaking -> reduce size bundle e.g lodash.get
+4. Tree Shaking -> reduce size bundle e.g: lodash.get
+5. Code-splitting -> using dynamic import e.g : import {getUser} from "../../services/user";
 
 ## Available Scripts
 
