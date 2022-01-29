@@ -1,6 +1,10 @@
-# Getting Started with Ajaib frontend
+# Getting Started with Ajaib frontend user table
 
 Github repository for the [Ajaib Frontend](https://github.com/Juanitoclement/Ajaib-Frontend).
+
+The project is created to snow a table of user with search, pagination, and sort functionalities using an open source random user generator.
+
+API -> https://randomuser.me/documentation
 
 ## Steps to run locally
 
